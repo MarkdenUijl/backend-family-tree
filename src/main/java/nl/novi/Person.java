@@ -103,14 +103,6 @@ public class Person {
 
     public void setSiblings(List<Person> siblings) {
         this.siblings = siblings;
-
-        for (Person sibling: this.siblings) {
-            List<Person> otherSiblings = new ArrayList<Person>(this.siblings);
-            otherSiblings.remove(sibling);
-            otherSiblings.add(this);
-
-            sibling.setSiblings(otherSiblings);
-        }
     }
 
     public List<Person> getChildren() {
@@ -162,15 +154,6 @@ public class Person {
 
     public void addSibling(Person newSibling) {
         siblings.add(newSibling);
-
-
-        for (Person sibling : this.siblings) {
-            List<Person> otherSiblings = new ArrayList<Person>(this.siblings);
-            otherSiblings.remove(sibling);
-            otherSiblings.add(this);
-
-            sibling.setSiblings(otherSiblings);
-        }
     }
 
     public List<Person> getGrandChildren() {
