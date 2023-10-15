@@ -348,4 +348,81 @@ class PersonTest {
         // assert
         assertEquals(child, actualGrandChild);
     }
+
+    @Test
+    void getGrandChildrensPets() {
+        // arrange
+        Person father = new Person("Vader", "den Uijl", 'm', 60);
+        Person child = new Person("Zoon", "den Uijl", 'm', 2);
+        Pet dog = new Pet("Luna", 5, "Dog");
+
+        // act
+        me.setFather(father);
+        me.addChild(child);
+
+        List<Pet>grandChildrensPets = father.getGrandChildrensPets();
+
+        // assert grandchild has no pet
+        assertEquals(0, grandChildrensPets.size());
+
+        // assert grandchild has pet
+        child.addPet(dog);
+        List<Pet> newGrandChildrensPets = father.getGrandChildrensPets();
+
+        assertEquals(1, newGrandChildrensPets.size());
+    }
+
+    @Test
+    void getAllNieces() {
+        // arrange
+        Person brother = new Person("Broer", "den Uijl", 'm', 31);
+        Person niece = new Person("Nichtje", "den Uijl", 'f', 2);
+        Person nephew = new Person("Neefje", "den Uijl", 'm', 1);
+
+        // act
+        me.addSibling(brother);
+        brother.addChild(nephew);
+        brother.addChild(niece);
+
+        List<Person> allNieces = me.getAllNieces();
+
+        // assert
+        assertEquals(1, allNieces.size());
+    }
+
+    @Test
+    void setPartner() {
+        // arrange
+        Person partner = new Person("Partner", "den Uijl", 'f', 33);
+        Person child = new Person("Zoon", "den Uijl", 'm', 1);
+        Pet dog = new Pet("Luna", 5, "Dog");
+
+        // act
+        me.addChild(child);
+        me.addPet(dog);
+        me.setPartner(partner);
+
+        List<Person> partnersChildren = partner.getChildren();
+        List<Pet> partnersPets = partner.getPets();
+        Person partnersChild = partnersChildren.get(0);
+        Pet partnersPet = partnersPets.get(0);
+
+        // assert
+        assertEquals(child, partnersChild);
+        assertEquals(dog, partnersPet);
+    }
+
+    @Test
+    void getPartner() {
+        // arrange
+        Person partner = new Person("Partner", "den Uijl", 'f', 33);
+
+        // act
+        me.setPartner(partner);
+
+        Person actualPartner = me.getPartner();
+
+        // assert
+        assertEquals(partner, actualPartner);
+    }
 }

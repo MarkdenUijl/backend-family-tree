@@ -14,6 +14,8 @@ public class Person {
     List<Person> siblings;
     List<Person> children;
     List<Pet> pets;
+    List grandChildrensPets;
+    Person partner;
 
     public Person(String name, String middleName, String lastName, char sex, int age) {
         this.name = name;
@@ -24,6 +26,7 @@ public class Person {
         this.siblings = new ArrayList<Person>();
         this.children = new ArrayList<Person>();
         this.pets = new ArrayList<Pet>();
+        this.grandChildrensPets = new ArrayList<Pet>();
     }
 
     public Person(String name, String lastName, char sex, int age) {
@@ -168,4 +171,47 @@ public class Person {
         return grandChildren;
     }
 
+    public List<Pet> getGrandChildrensPets() {
+        List<Person> grandChildren = getGrandChildren();
+        List<Pet> grandChildrensPets = new ArrayList<Pet>();
+
+        if (grandChildren.size() == 0) {
+            return grandChildrensPets;
+        }
+
+        for (Person grandChild: grandChildren) {
+            List<Pet> grandChildsPets = grandChild.getPets();
+            grandChildrensPets.addAll(grandChildsPets);
+        }
+
+        return grandChildrensPets;
+    }
+
+    public List<Person> getAllNieces() {
+        List<Person> nieces = new ArrayList<Person>();
+        List<Person> siblings = getSiblings();
+
+        for (Person sibling: siblings) {
+            List<Person> siblingsChildren = sibling.getChildren();
+
+            for (Person siblingsChild: siblingsChildren) {
+                if (siblingsChild.sex == 'f') {
+                    nieces.add(siblingsChild);
+                }
+            }
+        }
+
+        return nieces;
+    }
+
+    public Person getPartner() {
+        return partner;
+    }
+
+    public void setPartner(Person partner) {
+        this.partner = partner;
+
+        this.partner.setChildren(this.children);
+        this.partner.setPets(this.pets);
+    }
 }
